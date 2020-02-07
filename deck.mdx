@@ -1,0 +1,660 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import { nightOwl, vsDark } from "@code-surfer/themes";
+
+export const theme = vsDark;
+
+<CodeSurfer>
+
+```jsx title="This is a Hook"
+/* @flow */
+
+import React, { useEffect, useState } from 'react';
+import { useThemeContext } from '../Context/ContextProvider';
+
+export const MapMessages = ({
+  demoInProgress,
+  routeRecordingInProgress,
+  showDrivingTag,
+  isDriving,
+  setIsRecording
+}: MapMessagesProps) => {
+
+  return (
+    <>
+      {showDemoInProgress &&
+        <ForceSafeAreaView style={[styles.indicatorContainer, styles.demoIndicatorContainer]}>
+          <View style={styles.demoIndicator}>
+            <TtText style={styles.indicatorText}>{Localizer.getString('demo_in_progress')}</TtText>
+          </View>
+        </ForceSafeAreaView>
+      }
+    </>
+  );
+};
+```
+
+```jsx
+/* @flow */
+
+import React, { useEffect, useState } from 'react';
+import { useThemeContext } from '../Context/ContextProvider';
+
+export const MapMessages = ({
+  demoInProgress,
+  routeRecordingInProgress,
+  showDrivingTag,
+  isDriving,
+  setIsRecording
+}: MapMessagesProps) => {
+
+  const [ showDemoInProgress, setShowDemoInProgress ] = useState(true);
+  const [ showRouteRecordingInProgress, setShowRouteRecordingInProgress ] = useState(true);
+  const [ showDrivingInProgressTag, setShowDrivingInProgressTag ] = useState(true);
+
+  return (
+    <>
+      {showDemoInProgress &&
+        <ForceSafeAreaView style={[styles.indicatorContainer, styles.demoIndicatorContainer]}>
+          <View style={styles.demoIndicator}>
+            <TtText style={styles.indicatorText}>{Localizer.getString('demo_in_progress')}</TtText>
+          </View>
+        </ForceSafeAreaView>
+      }
+    </>
+  );
+};
+```
+```jsx
+/* @flow */
+
+import React, { useEffect, useState } from 'react';
+import { useThemeContext } from '../Context/ContextProvider';
+
+export const MapMessages = ({
+  demoInProgress,
+  routeRecordingInProgress,
+  showDrivingTag,
+  isDriving,
+  setIsRecording
+}: MapMessagesProps) => {
+
+  const [ showDemoInProgress, setShowDemoInProgress ] = useState(true);
+  const [ showRouteRecordingInProgress, setShowRouteRecordingInProgress ] = useState(true);
+  const [ showDrivingInProgressTag, setShowDrivingInProgressTag ] = useState(true);
+
+  // Demo;
+  useEffect(() => {
+    setShowDemoInProgress(demoInProgress);
+  }, [ demoInProgress ]);
+
+  // Is recording message
+  useEffect(() => {
+    setShowRouteRecordingInProgress(routeRecordingInProgress);
+  }, [ routeRecordingInProgress ]);
+
+  useEffect(() => {
+    setShowDrivingInProgressTag(isDriving);
+  },[showDrivingTag, isDriving]);
+
+  return (
+    <>
+      {showDemoInProgress &&
+        <ForceSafeAreaView style={[styles.indicatorContainer, styles.demoIndicatorContainer]}>
+          <View style={styles.demoIndicator}>
+            <TtText style={styles.indicatorText}>{Localizer.getString('demo_in_progress')}</TtText>
+          </View>
+        </ForceSafeAreaView>
+      }
+    </>
+  );
+};
+```
+```jsx
+/* @flow */
+
+import React, { useEffect, useState } from 'react';
+import { useThemeContext } from '../Context/ContextProvider';
+
+export const MapMessages = ({
+  demoInProgress,
+  routeRecordingInProgress,
+  showDrivingTag,
+  isDriving,
+  setIsRecording
+}: MapMessagesProps) => {
+
+  const [ showDemoInProgress, setShowDemoInProgress ] = useState(true);
+  const [ showRouteRecordingInProgress, setShowRouteRecordingInProgress ] = useState(true);
+  const [ showDrivingInProgressTag, setShowDrivingInProgressTag ] = useState(true);
+
+  const { isLandscape, theme } = useThemeContext();
+
+  // Demo;
+  useEffect(() => {
+    setShowDemoInProgress(demoInProgress);
+  }, [ demoInProgress ]);
+
+  // Is recording message
+  useEffect(() => {
+    setShowRouteRecordingInProgress(routeRecordingInProgress);
+  }, [ routeRecordingInProgress ]);
+
+  useEffect(() => {
+    setShowDrivingInProgressTag(isDriving);
+  },[showDrivingTag, isDriving]);
+
+  return (
+    <>
+      {showDemoInProgress &&
+        <ForceSafeAreaView style={[styles.indicatorContainer, styles.demoIndicatorContainer]}>
+          <View style={styles.demoIndicator}>
+            <TtText style={styles.indicatorText}>{Localizer.getString('demo_in_progress')}</TtText>
+          </View>
+        </ForceSafeAreaView>
+      }
+    </>
+  );
+};
+```
+```diff 3[16:35],4[9:24] subtitle="Normal and custom"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns themes={[vsDark, nightOwl]}>
+
+<Step>
+
+```jsx
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+```
+
+```jsx
+  useEffect(() => {
+    onMapViewMounted();
+  }, [])
+```
+
+</Step>
+
+<Step>
+
+```jsx
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx subtitle="cleanup effect"
+  useEffect(() => {
+    onMapViewMounted();
+
+    return () => {
+      onMapViewUnmounted();
+    };
+  }, [])
+```
+
+</Step>
+
+<Step>
+
+```jsx
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx subtitle="A function that return another function"
+  useEffect(() => () => cleanup(), [])
+```
+
+</Step>
+
+<Step>
+
+```jsx
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx
+  useEffect(() => {
+    onMapViewMounted();
+
+    return () => {
+      onMapViewUnmounted();
+    };
+  }, [])
+```
+
+</Step>
+
+<Step>
+
+```jsx
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentDidUpdate(prevProps: MapViewProps) {
+    const {
+      mapMode, searchPins, selectedViewport
+    } = this.props;
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      if (prevProps.mapMode !== mapMode) {
+        // entering search mode
+        this._fitCoordinatesToSafeArea(searchPins);
+      } else if (prevProps.searchPins !== searchPins) {
+        // search results have changed
+        this._fitCoordinatesToSafeArea(searchPins);
+      }
+      // more code ... else if
+    } else if (
+      mapMode === GUIDANCE_OVERVIEW
+      && (prevProps.mapMode !== mapMode)
+    ) {
+      Navkit2MapModule.focusOnRoute();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx subtitle="Update condition"
+  useEffect(() => {
+    onMapViewMounted();
+
+    return () => {
+      onMapViewUnmounted();
+    };
+  }, [])
+
+  useEffect(() => {
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      // entering search mode
+      // and search results have changed
+      _fitCoordinatesToSafeArea(searchPins);
+       // more code ... else if
+    } else if (
+        mapMode === GUIDANCE_OVERVIEW
+      ) {
+        Navkit2MapModule.focusOnRoute();
+    }
+
+  }, [mapMode, searchPins, selectedViewport]);
+
+
+```
+</Step>
+
+<Step>
+
+```jsx 5[22:30],13[11:39],16[18:52],27[9:42]
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentDidUpdate(prevProps: MapViewProps) {
+    const {
+      mapMode, searchPins, selectedViewport
+    } = this.props;
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      if (prevProps.mapMode !== mapMode) {
+        // entering search mode
+        this._fitCoordinatesToSafeArea(searchPins);
+      } else if (prevProps.searchPins !== searchPins) {
+        // search results have changed
+        this._fitCoordinatesToSafeArea(searchPins);
+      }
+    } else if (
+      mapMode === PIN_DETAILS_WITH_VIEWPORT
+      && selectedViewport != null) {
+      const viewportCoordinate: Array<BaseLocation> = [..., ...];
+      this._fitCoordinatesToSafeArea(viewportCoordinate);
+    } else if (
+      mapMode === GUIDANCE_OVERVIEW
+      && (prevProps.mapMode !== mapMode)
+    ) {
+      Navkit2MapModule.focusOnRoute();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx 30[7:43] subtitle="prevProps comparation out of the box"
+  useEffect(() => {
+    onMapViewMounted();
+
+    return () => {
+      onMapViewUnmounted();
+    };
+  }, [])
+
+  useEffect(() => {
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      // entering search mode
+      // and search results have changed
+      _fitCoordinatesToSafeArea(searchPins);
+    } else if (
+      mapMode === PIN_DETAILS_WITH_VIEWPORT
+      && selectedViewport != null
+    ) {
+      const viewportCoordinate: Array<BaseLocation> =
+      [..., ...];
+      _fitCoordinatesToSafeArea(viewportCoordinate);
+    } else if (
+        mapMode === GUIDANCE_OVERVIEW
+      ) {
+        Navkit2MapModule.focusOnRoute();
+    }
+
+  }, [mapMode, searchPins, selectedViewport]);
+```
+</Step>
+
+
+<Step>
+
+```jsx 15,18,24
+  componentDidMount() {
+    this.props.onMapViewMounted();
+  }
+
+  componentDidUpdate(prevProps: MapViewProps) {
+    const {
+      mapMode, searchPins, selectedViewport
+    } = this.props;
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      if (prevProps.mapMode !== mapMode) {
+        // entering search mode
+        this._fitCoordinatesToSafeArea(searchPins);
+      } else if (prevProps.searchPins !== searchPins) {
+        // search results have changed
+        this._fitCoordinatesToSafeArea(searchPins);
+      }
+    } else if (
+      mapMode === PIN_DETAILS_WITH_VIEWPORT
+      && selectedViewport != null) {
+      const viewportCoordinate: Array<BaseLocation> = [..., ...];
+      this._fitCoordinatesToSafeArea(viewportCoordinate);
+    } else if (
+      mapMode === GUIDANCE_OVERVIEW
+      && (prevProps.mapMode !== mapMode)
+    ) {
+      Navkit2MapModule.focusOnRoute();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.onMapViewUnmounted();
+  }
+```
+
+```jsx 16,23
+  useEffect(() => {
+    onMapViewMounted();
+
+    return () => {
+      onMapViewUnmounted();
+    };
+  }, [])
+
+  useEffect(() => {
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      // entering search mode
+      // and search results have changed
+      _fitCoordinatesToSafeArea(searchPins);
+    } else if (
+      mapMode === PIN_DETAILS_WITH_VIEWPORT
+      && selectedViewport != null
+    ) {
+      const viewportCoordinate: Array<BaseLocation> =
+      [..., ...];
+      _fitCoordinatesToSafeArea(viewportCoordinate);
+    } else if (
+        mapMode === GUIDANCE_OVERVIEW
+      ) {
+        Navkit2MapModule.focusOnRoute();
+    }
+
+  }, [mapMode, searchPins, selectedViewport]);
+```
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer>
+
+```jsx title="Class based component"
+  componentDidUpdate(prevProps: MapViewProps) {
+    const {
+      mapMode, searchPins, selectedViewport
+    } = this.props;
+    if (
+      mapMode === RESULTS_LIST ||
+      mapMode === RESULTS_FULLSCREEN
+    ) {
+      if (prevProps.mapMode !== mapMode) {
+        // entering search mode
+        this._fitCoordinatesToSafeArea(searchPins);
+      } else if (prevProps.searchPins !== searchPins) {
+        // search results have changed
+        this._fitCoordinatesToSafeArea(searchPins);
+      }
+    } else if (mapMode === PIN_DETAILS_WITH_VIEWPORT && selectedViewport != null) {
+      const viewportCoordinate: Array<BaseLocation> = [..., ...];
+      this._fitCoordinatesToSafeArea(viewportCoordinate);
+    } else if (mapMode === GUIDANCE_OVERVIEW && (prevProps.mapMode !== mapMode)) {
+      Navkit2MapModule.focusOnRoute();
+    }
+  }
+```
+
+```diff 9[11:39],12[18:52],19[50:78] subtitle="prevProps recheck"
+
+```
+
+```diff 11,14,18 subtitle="To call the same function"
+
+```
+```jsx
+useEffect(() => {
+  if (
+    mapMode === RESULTS_LIST ||
+    mapMode === RESULTS_FULLSCREEN
+  ) {
+    _fitCoordinatesToSafeArea(searchPins);
+  } else if (
+    mapMode === PIN_DETAILS_WITH_VIEWPORT
+    && selectedViewport != null
+  ) {
+    const viewportCoordinate: Array<BaseLocation> = [..., ...];
+    _fitCoordinatesToSafeArea(viewportCoordinate);
+  } else if ( mapMode === GUIDANCE_OVERVIEW ) {
+    Navkit2MapModule.focusOnRoute();
+  }
+
+}, [mapMode, searchPins, selectedViewport]);
+```
+
+```diff 6,17[5:23] subtitle="mapMode or searchPins"
+
+```
+
+```diff 12,17[25:41] subtitle="viewportCoordinate"
+
+```
+
+```jsx
+useEffect(() => {
+  if (
+    mapMode === RESULTS_LIST ||
+    mapMode === RESULTS_FULLSCREEN
+  ) {
+    _fitCoordinatesToSafeArea(searchPins);
+  } else if (
+    mapMode === PIN_DETAILS_WITH_VIEWPORT
+    && selectedViewport != null
+  ) {
+    const viewportCoordinate: Array<BaseLocation> = [..., ...];
+    _fitCoordinatesToSafeArea(viewportCoordinate);
+  } else if ( mapMode === GUIDANCE_OVERVIEW ) {
+    Navkit2MapModule.focusOnRoute();
+  }
+
+}, [mapMode, searchPins, selectedViewport]);
+```
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```ts title="useDeviceOrientation.ts"
+import React, { useEffect, useState } from 'react';
+import { Dimensions, PixelRatio } from 'react-native';
+
+const screen = Dimensions.get('screen');
+const pixelDensity = PixelRatio.get();
+
+export default function useDeviceOrientation() {
+  isOrientationPortrait = ({ width, height }) => height >= width;
+  isOrientationLandscape = ({ width, height }) => width >= height;
+  isTabletDevice = ({ width, height }) => {
+    const adjustedWidth = width * pixelDensity;
+    const adjustedHeight = height * pixelDensity;
+
+    if (pixelDensity < 2 && (adjustedWidth >= 1000 || adjustedHeight >= 1000)) {
+      setDevice({
+        isTablet: true,
+        isPhone: false,
+      })
+    } else if (pixelDensity === 2 && (adjustedWidth >= 1824 || adjustedHeight >= 1824)) {
+      setDevice({
+        isTablet: true,
+        isPhone: false,
+      })
+    } else {
+      setDevice({
+        isTablet: false,
+        isPhone: true,
+      })
+    }
+  }
+
+  const [{ portrait, landscape }, setOrientation] = useState({
+    portrait: isOrientationPortrait(screen),
+    landscape: isOrientationLandscape(screen),
+  });
+
+  const [{ isTablet, isPhone }, setDevice ] = useState({
+    isTablet: isTabletDevice(screen),
+    isPhone: !isTabletDevice(screen)
+  });
+
+  onChange = ({ screen }) => {
+    setOrientation({
+      portrait: isOrientationPortrait(screen),
+      landscape: isOrientationLandscape(screen)
+    });
+  };
+
+  useEffect(() => {
+    Dimensions.addEventListener('change', onChange);
+
+    return () => {
+      Dimensions.removeEventListener('change', onChange);
+    };
+  },[portrait, landscape]);
+
+  return [
+    orientation,
+    isTablet,
+    isPhone
+  ];
+};
+```
+
+```diff 8[3:23],9[3:24],10[3:16] subtitle="Define some logic"
+
+```
+
+```diff 11,12 subtitle="pixelDensity"
+
+```
+
+```diff 15,16,17,18,20,21,22,23,25,26,27,28 subtitle="I know, this logic is stupid"
+
+```
+
+```diff 50,55
+
+```
+
+```diff 42
+
+```
+
+```diff 58,59,60
+
+```
+
+```diff 58,59,60 subtitle="const [ orientation, isTablet ] = useDeviceOrientation()"
+
+```
+
+```diff 58,59,60 subtitle="The array bracket syntax is called array deconstructing assignment."
+
+```
+
+</CodeSurfer>
+
+---
